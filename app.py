@@ -267,11 +267,7 @@ def video_frames(jid):
             job["fps"] = round(1 / max(now - last, 1e-3), 1)
             last = now
             _, buf = cv2.imencode(".jpg", plotted, [cv2.IMWRITE_JPEG_QUALITY, 80])
-            yield b"--frame
-Content-Type: image/jpeg
-
-" + buf.tobytes() + b"
-"
+            yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + buf.tobytes() + b"\r\n"
     finally:
         cap.release()
         job["done"] = True
